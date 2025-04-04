@@ -38,36 +38,39 @@ def get_truncated_path(start_folder):
     return full_path
 
 rootpath = get_truncated_path('psy-data')
-
+os.system('cls')
 #main functions
-if i == 1:
+while True:
     inputcmd = input("PSY:/" + rootpath + ">")
-    i = 0
 
-while s < commandslen:
-    if inputcmd == commands[s]:
-        c = 1
-    else:
-        if c != 1:
-            c = 0
-    s = s + 1
+    while s < commandslen:
+        if inputcmd == commands[s]:
+            c = 1
+        else:
+            if c != 1:
+                c = 0
+        s = s + 1
 
-if c != 1:
-    print("command not found")
+    if c != 1:
+        print("command not found")
 
-#commands
+    #commands
 
-#help command
-if c == 1 and inputcmd == 'help':
-    print(commandinfo['psy'])
-    print(commandinfo['help'])
-    print(commandinfo['exit'])
-    print(commandinfo['version'])
+    #help command
+    if c == 1 and inputcmd == 'help':
+        print(commandinfo['psy'])
+        print(commandinfo['help'])
+        print(commandinfo['exit'])
+        print(commandinfo['version'])
 
-#psy command
-if c == 1 and inputcmd == 'psy':
-    print(logo)
+    #psy command
+    if c == 1 and inputcmd == 'psy':
+        print(logo)
 
-#exit command
-if c == 1 and inputcmd == 'exit':
-    exit()
+    #exit command
+    if c == 1 and inputcmd == 'exit':
+        exit()
+
+    #version command
+    if c == 1 and inputcmd == 'version':
+        print("psy-cmd v 0.0.1")
