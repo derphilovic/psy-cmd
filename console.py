@@ -25,7 +25,7 @@ commandinfo = {
     'color' : 'color - changes the color of the console',
     'newfile' : 'newfile - creates a new file. Please don\'t enter the name of the file with the command itself.',
     'number-game' : 'number-game - plays a number guessing game',
-    'echo' : 'repeats your input',
+    'echo' : 'echo - repeats your input',
     'delfile' : 'delfile - deletes a file. Please don\'t enter the name of the file with the command itself.',
     'readfile' : 'readfile - reads a file. Please don\'t enter the name of the file with the command itself.',
 }
