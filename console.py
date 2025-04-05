@@ -1,13 +1,14 @@
 #import modules
 import os
 import time
+import random
 os.system('cls')
 os.system('color')
 #startup variables
 i = 1
 s = 0
 c = 0
-commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile' ]
+commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile', 'number-game', 'echo', ]
 commandslen = len(commands)
 commandinfo = {
     'psy' : 'psy - displays psy-cmd logo',
@@ -21,7 +22,9 @@ commandinfo = {
     'homedir' : 'homedir - goes to the home directory',
     'deldir' : 'deldir - deletes a directory. Please don\'t enter the name of the dir with the command itself.',
     'color' : 'color - changes the color of the console',
-    'newfile' : 'newfile - creates a new file. Please don\'t enter the name of the file with the command itself.'
+    'newfile' : 'newfile - creates a new file. Please don\'t enter the name of the file with the command itself.',
+    'number-game' : 'number-game - plays a number guessing game',
+    'echo' : 'repeats your input'
 }
 
 logo = """                                                        __     
@@ -33,8 +36,7 @@ logo = """                                                        __
   \\ \\ \\/  \\/___/  `/___/> \\        \\/____/\\/_/\\/_/\\/_/\\/__,_ / 
    \\ \\_\\             /\\___/                                   
     \\/_/             \\/__/                                    """
-vers = "psy-cmd 0.0.1"
-
+vers = "psy-cmd 0.0.2"
 colors = {
     'white' : '07',
     'red' : '04',
@@ -46,6 +48,7 @@ colors = {
     'gray' : '08',
 }
 z = 0
+randnum = 0
 #startup functions
 
 if not os.path.exists('psy-data'):
@@ -198,7 +201,7 @@ while True:
             print("color not found")
         c = 0
 
-        #newfile command
+    #newfile command
     if c == 1 and inputcmd == 'newfile':
         newfile = input("newfile: ")
         fileext = input("file extension: ")
@@ -209,6 +212,28 @@ while True:
             print("new file " + newfile + '.' + fileext + " created")
         c = 0
 
+    #numbergame command
+    if c == 1 and inputcmd == 'number-game':
+        numberguess = input("Name a number between 1 and 10: ")
+        randnum = random.randint(1, 10)
+        try:
+            numberguess = int(numberguess)
+            if numberguess == randnum:
+                print("you won!")
+            else:
+                print("you lose!")
+                print("better luck next time!")
+                print(f"The number was: {randnum}")
+        except ValueError:
+            print("That's not a valid number!")
+        c = 0
+    
+    #echo
+    if c == 1 and inputcmd == 'echo':
+        echo = input("echo: ")
+        print(echo)
+
+    
     #reset variables
     s = 0
     rootpath = get_truncated_path('psy-data')
