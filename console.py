@@ -2,13 +2,14 @@
 import os
 import time
 import random
+import shutil
 os.system('cls')
 os.system('color')
 #startup variables
 i = 1
 s = 0
 c = 0
-commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile', 'number-game', 'echo', ]
+commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile', 'number-game', 'echo', 'delfile', 'readfile']
 commandslen = len(commands)
 commandinfo = {
     'psy' : 'psy - displays psy-cmd logo',
@@ -24,7 +25,9 @@ commandinfo = {
     'color' : 'color - changes the color of the console',
     'newfile' : 'newfile - creates a new file. Please don\'t enter the name of the file with the command itself.',
     'number-game' : 'number-game - plays a number guessing game',
-    'echo' : 'repeats your input'
+    'echo' : 'repeats your input',
+    'delfile' : 'delfile - deletes a file. Please don\'t enter the name of the file with the command itself.',
+    'readfile' : 'readfile - reads a file. Please don\'t enter the name of the file with the command itself.',
 }
 
 logo = """                                                        __     
@@ -174,7 +177,7 @@ while True:
     if c == 1 and inputcmd == 'deldir':
         deldir = input("deldir: ")
         if os.path.exists(deldir):
-            os.rmdir(deldir)
+            shutil.rmtree(deldir)
             print("deleted directory " + deldir)
         else:
             print("directory not found")
@@ -233,6 +236,28 @@ while True:
         echo = input("echo: ")
         print(echo)
 
+    #delfile command
+    if c == 1 and inputcmd == 'delfile':
+        delfile = input("delfile: ")
+        if os.path.exists(delfile):
+            os.remove(delfile)
+            print("deleted file " + delfile)
+        else:
+            print("file not found")
+        c = 0
+
+    #readfile command
+    if c == 1 and inputcmd == 'readfile':
+        readfile = input("readfile: ")
+        if os.path.exists(readfile):
+            with open(readfile, 'r') as f:
+                content = f.read()
+                print("⌄⌄⌄⌄⌄⌄")
+                print(content)
+                print("⌃⌃⌃⌃⌃⌃")
+        else:
+            print("file not found")
+        c = 0
     
     #reset variables
     s = 0
