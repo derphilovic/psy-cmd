@@ -235,6 +235,7 @@ while True:
     if c == 1 and inputcmd == 'echo':
         echo = input("echo: ")
         print(echo)
+        c = 0
 
     #delfile command
     if c == 1 and inputcmd == 'delfile':
