@@ -386,6 +386,7 @@ while True:
             os.system(run)
         else:
             print("file not found")
+        c = 0
 
     #calc command
     if c == 1 and inputcmd == 'calc':
