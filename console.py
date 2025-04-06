@@ -9,7 +9,8 @@ os.system('color')
 i = 1
 s = 0
 c = 0
-commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile', 'number-game', 'echo', 'delfile', 'readfile']
+commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile', 'number-game', 'echo', 'delfile', 'readfile', 'editfile',
+              'run', 'calc']
 commandslen = len(commands)
 commandinfo = {
     'psy' : 'psy - displays psy-cmd logo',
@@ -28,6 +29,9 @@ commandinfo = {
     'echo' : 'echo - repeats your input',
     'delfile' : 'delfile - deletes a file. Please don\'t enter the name of the file with the command itself.',
     'readfile' : 'readfile - reads a file. Please don\'t enter the name of the file with the command itself.',
+    'editfile' : 'editfile - edits a file. Please don\'t enter the name of the file with the command itself.',
+    'run' : 'run - runs a file. Please don\'t enter the name of the file with the command itself.',
+    'calc' : 'calc - opens psy-calc'
 }
 
 logo = """                                                        __     
@@ -39,7 +43,17 @@ logo = """                                                        __
   \\ \\ \\/  \\/___/  `/___/> \\        \\/____/\\/_/\\/_/\\/_/\\/__,_ / 
    \\ \\_\\             /\\___/                                   
     \\/_/             \\/__/                                    """
-vers = "psy-cmd 0.0.2"
+
+logo2 = """                                 __                   __      
+                                /\ \__               /\ \__   
+ _____     ____  __  __         \ \ ,_\    __   __  _\ \ ,_\  
+/\ '__`\  /',__\/\ \/\ \  _______\ \ \/  /'__`\/\ \/'\\\ \ \/  
+\ \ \L\ \/\__, `\ \ \_\ \/\______\\\ \ \_/\  __/\/>  </ \ \ \_ 
+ \ \ ,__/\/\____/\/`____ \/______/ \ \__\ \____\/\_/\_\ \ \__\\
+  \ \ \/  \/___/  `/___/> \         \/__/\/____/\//\/_/  \/__/
+   \ \_\             /\___/                                   
+    \/_/             \/__/                                    """
+vers = "psy-cmd 0.1.0"
 colors = {
     'white' : '07',
     'red' : '04',
@@ -260,6 +274,134 @@ while True:
             print("file not found")
         c = 0
     
+    #editfile command
+    if c == 1 and inputcmd == 'editfile':
+        editfile = input("editfile: ")
+        if os.path.exists(editfile):
+            with open(editfile, 'r') as f:
+                content = f.read()
+            os.system('cls')
+            lines = content.split('\n')
+            print(logo2)
+            print("Commands:")
+            print("  :wq - Save and quit")
+            print("  :q  - Quit without saving")
+            print("  :n  - Go to line number n (e.g., :5)")
+            print("  :l  - List all lines")
+            print("  :h  - Shows all commands")
+            
+            current_line = 0
+            total_lines = len(lines)
+            # Function to display all lines with line numbers
+            def display_lines():
+                print("\nFile content:")
+                for i, line in enumerate(lines):
+                    print(f"{i+1:3d}| {line}")
+                print()
+            # Initial display
+            display_lines()
+            while True:
+                # Show current line position
+                if current_line < total_lines:
+                    prompt = f"[{current_line+1}/{total_lines}]> "
+                    current_content = lines[current_line]
+                    print(f"Current line: {current_content}")
+                else:
+                    prompt = f"[{current_line+1}/new]> "
+                    current_content = ""
+                # Get user input
+                user_input = input(prompt)
+                # Process commands
+                if user_input == ':wq':
+                    # Save and quit
+                    with open(editfile, 'w') as f:
+                        f.write('\n'.join(lines))
+                    print(f"File {editfile} saved successfully.")
+                    break
+                elif user_input == ':q':
+                    # Quit without saving
+                    print(f"Exited without saving changes to {editfile}.")
+                    break
+                elif user_input == ':l':
+                    # List all lines
+                    display_lines()
+                elif user_input == ':h':
+                    # Show help
+                    print("\nCommands:")
+                    print("  :wq - Save and quit")
+                    print("  :q  - Quit without saving")
+                    print("  :n  - Go to line number n (e.g., :5)")
+                    print("  :l  - List all lines")
+                    print("  :h  - Show help")
+                    print("  :u  - Move up one line")
+                    print("  :d  - Move down one line")
+                    print()
+                elif user_input == ':u':
+                    # Move up one line
+                    if current_line > 0:
+                        current_line -= 1
+                    else:
+                        print("Already at the first line.")     
+                elif user_input == ':d':
+                    # Move down one line
+                    if current_line < total_lines:
+                        current_line += 1
+                    else:
+                        print("At the end of the file. Adding a new line.")
+                        lines.append("")
+                        total_lines += 1
+                        current_line = total_lines - 1
+                elif user_input.startswith(':') and user_input[1:].isdigit():
+                    # Go to specific line
+                    line_num = int(user_input[1:])
+                    if 1 <= line_num <= total_lines:
+                        current_line = line_num - 1
+                    elif line_num == total_lines + 1:
+                        # Allow adding a new line at the end
+                        lines.append("")
+                        total_lines += 1
+                        current_line = total_lines - 1
+                    else:
+                        print(f"Line number out of range. Valid range: 1-{total_lines+1}")
+                        
+                else:
+                    # Edit the current line
+                    if current_line < total_lines:
+                        lines[current_line] = user_input
+                    else:
+                        lines.append(user_input)
+                        total_lines += 1
+                    
+                    # Automatically move to the next line after editing
+                    if current_line < total_lines:
+                        current_line += 1
+        else:
+            print("file not found")
+        c = 0
+
+    #run command
+    if c == 1 and inputcmd == 'run':
+        run = input("file to run: ")
+        if os.path.exists(run):
+            os.system(run)
+        else:
+            print("file not found")
+
+    #calc command
+    if c == 1 and inputcmd == 'calc':
+        print("Psy-Calc")
+        print("Following Commands are available:")
+        print("(+) Addition")
+        print("(-) Subtraction")
+        print("(/) Division")
+        print("(*) Multiplication")
+        calc = input("calc: ")
+        try:
+            result = eval(calc)
+            print(result)
+        except Exception as e:
+            print("Error:", e)
+        c = 0
     #reset variables
     s = 0
     rootpath = get_truncated_path('psy-data')
