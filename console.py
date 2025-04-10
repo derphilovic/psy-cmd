@@ -10,7 +10,7 @@ i = 1
 s = 0
 c = 0
 commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile', 'number-game', 'echo', 'delfile', 'readfile', 'editfile',
-              'run', 'calc']
+              'run', 'calc',]
 commandslen = len(commands)
 commandinfo = {
     'psy' : 'psy - displays psy-cmd logo',
@@ -31,7 +31,7 @@ commandinfo = {
     'readfile' : 'readfile - reads a file. Please don\'t enter the name of the file with the command itself.',
     'editfile' : 'editfile - edits a file. Please don\'t enter the name of the file with the command itself.',
     'run' : 'run - runs a file. Please don\'t enter the name of the file with the command itself.',
-    'calc' : 'calc - opens psy-calc'
+    'calc' : 'calc - opens psy-calc',
 }
 
 logo = """                                                        __     
@@ -403,6 +403,9 @@ while True:
         except Exception as e:
             print("Error:", e)
         c = 0
+
+    
+
     #reset variables
     s = 0
     rootpath = get_truncated_path('psy-data')

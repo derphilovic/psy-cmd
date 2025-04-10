@@ -1,5 +1,0 @@
-
-Hope this works
-\
-exit
-read
