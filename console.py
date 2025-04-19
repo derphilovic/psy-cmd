@@ -10,7 +10,7 @@ i = 1
 s = 0
 c = 0
 commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile', 'number-game', 'echo', 'delfile', 'readfile', 'editfile',
-              'run', 'calc',]
+              'run', 'calc', 'net']
 commandslen = len(commands)
 commandinfo = {
     'psy' : 'psy - displays psy-cmd logo',
@@ -32,6 +32,7 @@ commandinfo = {
     'editfile' : 'editfile - edits a file. Please don\'t enter the name of the file with the command itself.',
     'run' : 'run - runs a file. Please don\'t enter the name of the file with the command itself.',
     'calc' : 'calc - opens psy-calc',
+    'net' : 'net - opens psy-net',
 }
 
 logo = """                                                        __     
@@ -70,6 +71,11 @@ randnum = 0
 
 if not os.path.exists('psy-data'):
     os.mkdir('psy-data')
+
+if not os.path.exists('psy-extensions'):
+    print("Critical Error: psy-extensions not found. Please reinstall psy-cmd.")
+    time.sleep(10)
+    exit()
 
 os.chdir('psy-data')
 psy_data_root = os.getcwd()
@@ -404,7 +410,17 @@ while True:
             print("Error:", e)
         c = 0
 
-    
+    #net command
+    if c == 1 and inputcmd == 'net':
+        # Get the parent directory of psy_data_root
+        parent_dir = os.path.dirname(psy_data_root)
+        extension_path = os.path.join(parent_dir, 'psy-extensions', 'net.py')
+        if os.path.exists(extension_path):
+            os.system(f'py "{extension_path}"')
+        else:
+            print("net.py not found please reinstall psy-cmd")
+        c = 0
+
 
     #reset variables
     s = 0

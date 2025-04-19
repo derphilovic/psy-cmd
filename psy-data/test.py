@@ -2,7 +2,7 @@ i = 0
 while i < 10:
     print(i)
     i = i + 1
-#this was written with psy-text in psy cmd
+print("Mihai ist Fett aber Sympatisch!")
 y = "G"
 z = 0
 while z != 6:
