@@ -5,7 +5,12 @@ import struct
 import os
 
 #setup variables
-SERVER_HOST = '127.0.0.1'
+temp_IP = input("Enter server IP: ")
+temp_IP = temp_IP.strip()
+if temp_IP == '':
+    SERVER_HOST = '127.0.0.1'
+else:
+    SERVER_HOST = temp_IP
 SERVER_PORT = 65432
 
 #startup functions

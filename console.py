@@ -10,7 +10,7 @@ i = 1
 s = 0
 c = 0
 commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile', 'number-game', 'echo', 'delfile', 'readfile', 'editfile',
-              'run', 'calc', 'net']
+              'run', 'calc', 'net', 'install' ]
 commandslen = len(commands)
 commandinfo = {
     'psy' : 'psy - displays psy-cmd logo',
@@ -33,6 +33,7 @@ commandinfo = {
     'run' : 'run - runs a file. Please don\'t enter the name of the file with the command itself.',
     'calc' : 'calc - opens psy-calc',
     'net' : 'net - opens psy-net',
+    'install' : 'install - installs a python program',
 }
 
 logo = """                                                       __     
@@ -419,6 +420,41 @@ while True:
             os.system(f'py "{extension_path}"')
         else:
             print("net.py not found please reinstall psy-cmd")
+        c = 0
+
+    #install command
+    if c == 1 and inputcmd == 'install':
+        install = input("Python script to install (with extensions): ")
+        if os.path.exists(install):
+            modules_to_install = set()
+            try:
+                with open(install, 'r') as f:
+                    for line in f:
+                        line = line.strip()
+                        if line.startswith('import'):
+                            module = line.replace('import', '', 1).strip().split()[0].split('.')[0]
+                            modules_to_install.add(module)
+                        elif line.startswith('from'):
+                            parts = line.split()
+                            if len(parts) >= 2:
+                                module = parts[1].split('.')[0]
+                                modules_to_install.add(module)
+                if modules_to_install:
+                    print(f"Found {len(modules_to_install)} modules to install: {', '.join(modules_to_install)}")
+                    confirm = input("Proceed with installation? (y/n): ")
+                    if confirm.lower() == 'y':
+                        for module in modules_to_install:
+                            print(f"Installing {module}...")
+                            os.system(f'py -m pip install {module}')
+                        print("Installation complete!")
+                    else:
+                        print("Installation cancelled.")
+                else:
+                    print("Error: No modules to install found in the file.")
+            except Exception as e:
+                print(f"Error reading file: {e}")
+        else:
+            print("Error: File not found.")
         c = 0
 
 
