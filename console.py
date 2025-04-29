@@ -3,6 +3,7 @@ import os
 import time
 import random
 import shutil
+import datetime
 os.system('cls')
 os.system('color')
 #startup variables
@@ -10,7 +11,7 @@ i = 1
 s = 0
 c = 0
 commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile', 'number-game', 'echo', 'delfile', 'readfile', 'editfile',
-              'run', 'calc', 'net', 'install' ]
+              'run', 'calc', 'net', 'install', 'time', 'sysinfo', 'timer', 'uptime']
 commandslen = len(commands)
 commandinfo = {
     'psy' : 'psy - displays psy-cmd logo',
@@ -34,6 +35,10 @@ commandinfo = {
     'calc' : 'calc - opens psy-calc',
     'net' : 'net - opens psy-net',
     'install' : 'install - installs a python program',
+    'time' : 'time - gives you the time',
+    'sysinfo' : 'sysinfo',
+    'timer' : 'timer - makes an timer',
+    'uptime' : 'uptime'
 }
 
 logo = """                                                       __     
@@ -68,6 +73,8 @@ colors = {
 }
 z = 0
 randnum = 0
+timerCurrent = 0
+wantedTimer = 0
 #startup functions
 
 if not os.path.exists('psy-data'):
@@ -457,6 +464,19 @@ while True:
             print("Error: File not found.")
         c = 0
 
+    #time command
+    if c == 1 and inputcmd == 'time':
+        timedate = datetime.datetime.now()
+        print(timedate)
+        c = 0
+
+    #timer command
+    if c == 1 and inputcmd == 'timer':
+        wantedTimer = input("Timer length(seconds): ")
+        wantedTimer = int(wantedTimer)
+        time.sleep(wantedTimer)
+        print("Timer over!")
+        c = 0
 
     #reset variables
     s = 0
