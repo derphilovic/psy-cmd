@@ -11,7 +11,7 @@ i = 1
 s = 0
 c = 0
 commands =  [ 'psy', 'help', 'exit', 'version', 'clear', 'newdir', 'godir', 'listdir', 'homedir', 'deldir', 'color', 'newfile', 'number-game', 'echo', 'delfile', 'readfile', 'editfile',
-              'run', 'calc', 'net', 'install', 'time', 'sysinfo', 'timer', 'uptime']
+              'run', 'calc', 'net', 'install', 'time', 'timer',]
 commandslen = len(commands)
 commandinfo = {
     'psy' : 'psy - displays psy-cmd logo',
@@ -36,9 +36,7 @@ commandinfo = {
     'net' : 'net - opens psy-net',
     'install' : 'install - installs a python program',
     'time' : 'time - gives you the time',
-    'sysinfo' : 'sysinfo',
     'timer' : 'timer - makes an timer',
-    'uptime' : 'uptime'
 }
 
 logo = """                                                       __     
@@ -60,6 +58,7 @@ logo2 = """                                 __                   __
   \ \ \/  \/___/  `/___/> \         \/__/\/____/\//\/_/  \/__/
    \ \_\             /\___/                                   
     \/_/             \/__/                                    """
+
 vers = "psy-cmd 0.1.0"
 colors = {
     'white' : '07',
@@ -478,6 +477,9 @@ while True:
         print("Timer over!")
         c = 0
 
+
+
     #reset variables
     s = 0
     rootpath = get_truncated_path('psy-data')
+    
